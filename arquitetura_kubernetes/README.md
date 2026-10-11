@@ -146,7 +146,7 @@ minikube stop
 Ficam em [`artefatos/`](artefatos/):
 
 - `execucao_*.log`: saída dos comandos (`minikube start`, `kubectl apply`, `get`, `describe`, `logs`, `curl`);
-- `navegador_service.png`: página servida pelo Service em `http://192.168.59.100:30080`;
+- `navegador_url_service.png`: navegador acessando o Service em `http://192.168.59.100:30080`;
 - prints do terminal e do navegador acessando o Service.
 
 Ambiente da execução: minikube v1.39.0 (driver VirtualBox), Kubernetes v1.37.0 e kubectl v1.37.1, no Ubuntu 26.04. Resumo:
