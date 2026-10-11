@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: meu-app-python
+  labels:
+    app: meu-app-python   # label usada pelo Service (selector) para encontrar este Pod
+spec:
+  containers:
+    - name: meu-app-python
+      image: egondimjr/meu_app_python:1.0   # imagem própria no Docker Hub
+      ports:
+        - containerPort: 5000               # porta em que a aplicação Flask escuta
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "64Mi"
+        limits:
+          cpu: "250m"
+          memory: "128Mi"

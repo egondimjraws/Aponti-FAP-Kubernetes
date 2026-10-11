@@ -1,0 +1,219 @@
+<mxfile host="drawio" version="24.7.17">
+  <diagram id="arquitetura-k8s" name="Arquitetura Kubernetes">
+    <mxGraphModel dx="1800" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1820" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- ===================== TÍTULO ===================== -->
+        <mxCell id="titulo" value="&lt;b&gt;Arquitetura do Kubernetes&lt;/b&gt; — execução do &lt;i&gt;egondimjr/meu_app_python:1.0&lt;/i&gt; no minikube" style="text;html=1;align=center;verticalAlign=middle;fontSize=22;fontColor=#326CE5;" vertex="1" parent="1">
+          <mxGeometry x="240" y="20" width="1330" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- ===================== CLUSTER ===================== -->
+        <mxCell id="cluster" value="Cluster Kubernetes (minikube)" style="rounded=1;arcSize=2;whiteSpace=wrap;html=1;fillColor=#F7F9FF;strokeColor=#326CE5;strokeWidth=3;dashed=1;verticalAlign=top;align=left;spacingLeft=12;spacingTop=4;fontStyle=1;fontSize=16;fontColor=#326CE5;" vertex="1" parent="1">
+          <mxGeometry x="240" y="90" width="1330" height="890" as="geometry" />
+        </mxCell>
+
+        <!-- ===================== CONTROL PLANE ===================== -->
+        <mxCell id="cp" value="Control Plane (cérebro do cluster)" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=2;verticalAlign=top;align=center;spacingTop=4;fontStyle=1;fontSize=15;" vertex="1" parent="1">
+          <mxGeometry x="270" y="130" width="570" height="340" as="geometry" />
+        </mxCell>
+        <mxCell id="apiserver" value="&lt;b&gt;kube-apiserver&lt;/b&gt;&lt;br&gt;porta de entrada da API&lt;br&gt;(valida e configura objetos)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#326CE5;strokeColor=#1A4AA8;fontColor=#FFFFFF;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="440" y="180" width="230" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="etcd" value="&lt;b&gt;etcd&lt;/b&gt;&lt;br&gt;banco chave-valor&lt;br&gt;estado do cluster" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#FFFFFF;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="285" y="360" width="110" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="scheduler" value="&lt;b&gt;kube-scheduler&lt;/b&gt;&lt;br&gt;escolhe em qual Node o Pod roda" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="405" y="360" width="120" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="controller" value="&lt;b&gt;kube-controller-manager&lt;/b&gt;&lt;br&gt;loops de reconciliação (ReplicaSet, Endpoints...)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="585" y="360" width="120" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="cloud" value="&lt;b&gt;cloud-controller-manager&lt;/b&gt;&lt;br&gt;integra com AWS/GCP/Azure&lt;br&gt;(não usado no minikube)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#6c8ebf;dashed=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="715" y="360" width="115" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- ===================== OBJETOS DA API ===================== -->
+        <mxCell id="objetos" value="Objetos da API — estado desejado (YAML), gravado no etcd" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=2;verticalAlign=top;align=center;spacingTop=4;fontStyle=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="870" y="130" width="680" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="obj_deploy" value="&lt;b&gt;Deployment&lt;/b&gt;&lt;br&gt;atualização declarativa,&lt;br&gt;rollout / rollback" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="890" y="175" width="150" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="obj_rs" value="&lt;b&gt;ReplicaSet&lt;/b&gt;&lt;br&gt;mantém N réplicas&lt;br&gt;(escala e autocura)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="175" width="150" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="obj_pod" value="&lt;b&gt;Pod&lt;/b&gt;&lt;br&gt;menor unidade&lt;br&gt;(pod.yml)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1270" y="175" width="115" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="obj_svc" value="&lt;b&gt;Service&lt;/b&gt;&lt;br&gt;acesso estável&lt;br&gt;(service.yml)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1420" y="175" width="115" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="obj_outros" value="Outros objetos: &lt;b&gt;Namespace&lt;/b&gt; (isolamento lógico) · &lt;b&gt;Labels / Selectors&lt;/b&gt; (agrupamento) · &lt;b&gt;ConfigMap / Secret&lt;/b&gt; (configuração) · &lt;b&gt;Volume&lt;/b&gt; (dados persistentes) · &lt;b&gt;Ingress&lt;/b&gt; (roteamento HTTP)&lt;br&gt;Tipos de Service: ClusterIP (padrão, interno) · &lt;b&gt;NodePort&lt;/b&gt; (usado aqui) · LoadBalancer (nuvem) · ExternalName (DNS)" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=11;spacingLeft=4;" vertex="1" parent="1">
+          <mxGeometry x="890" y="270" width="645" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="e_deploy_rs" value="gerencia" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#B38F00;fontSize=10;" edge="1" parent="1" source="obj_deploy" target="obj_rs">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_rs_pod" value="cria" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#B38F00;fontSize=10;" edge="1" parent="1" source="obj_rs" target="obj_pod">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_svc_pod" value="selector" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;dashed=1;strokeColor=#B38F00;fontSize=10;" edge="1" parent="1" source="obj_svc" target="obj_pod">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ===================== ADDONS ===================== -->
+        <mxCell id="addons" value="Addons (rodam como Pods/Services dentro do cluster)" style="rounded=1;arcSize=5;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=2;verticalAlign=top;align=center;spacingTop=2;fontStyle=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="870" y="380" width="680" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="addon_dns" value="&lt;b&gt;CoreDNS&lt;/b&gt;&lt;br&gt;descoberta por nome" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="885" y="410" width="150" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="addon_dash" value="&lt;b&gt;Dashboard&lt;/b&gt;&lt;br&gt;interface web" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="410" width="150" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="addon_ingress" value="&lt;b&gt;Ingress Controller&lt;/b&gt;&lt;br&gt;roteamento HTTP" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1215" y="410" width="150" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="addon_metrics" value="&lt;b&gt;Prometheus / Grafana&lt;/b&gt;&lt;br&gt;monitoramento e logs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1380" y="410" width="155" height="48" as="geometry" />
+        </mxCell>
+
+        <!-- ===================== WORKER NODE ===================== -->
+        <mxCell id="node" value="Worker Node — plano de nós (no minikube, o mesmo nó também hospeda o Control Plane)" style="rounded=1;arcSize=2;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=2;verticalAlign=top;align=center;spacingTop=4;fontStyle=1;fontSize=15;" vertex="1" parent="1">
+          <mxGeometry x="270" y="500" width="1280" height="460" as="geometry" />
+        </mxCell>
+        <mxCell id="kubelet" value="&lt;b&gt;kubelet&lt;/b&gt;&lt;br&gt;agente do nó: garante que os&lt;br&gt;contêineres do Pod estejam rodando" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82b366;strokeWidth=2;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="300" y="560" width="190" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="runtime" value="&lt;b&gt;Container Runtime&lt;/b&gt;&lt;br&gt;containerd / Docker / CRI-O&lt;br&gt;inicia e para contêineres" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82b366;strokeWidth=2;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="300" y="680" width="190" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="kubeproxy" value="&lt;b&gt;kube-proxy&lt;/b&gt;&lt;br&gt;regras de rede (iptables/IPVS)&lt;br&gt;para os Services" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82b366;strokeWidth=2;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="300" y="820" width="190" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Namespace -->
+        <mxCell id="ns" value="Namespace: default" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#666666;dashed=1;verticalAlign=top;align=left;spacingLeft=8;fontSize=12;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="560" y="545" width="620" height="390" as="geometry" />
+        </mxCell>
+
+        <!-- Pod 1 (pod.yml) -->
+        <mxCell id="pod1" value="&lt;b&gt;Pod: meu-app-python&lt;/b&gt;&lt;br&gt;IP do Pod: 10.244.0.x&lt;br&gt;label app=meu-app-python" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#326CE5;strokeWidth=2;verticalAlign=top;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="590" y="590" width="260" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="ctr1" value="&lt;b&gt;Container&lt;/b&gt;&lt;br&gt;egondimjr/meu_app_python:1.0&lt;br&gt;Flask escutando na porta 5000" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="615" y="680" width="210" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- Pod 2 (réplica ilustrativa) -->
+        <mxCell id="pod2" value="&lt;b&gt;Pod (réplica)&lt;/b&gt;&lt;br&gt;criado por um ReplicaSet/Deployment&lt;br&gt;label app=meu-app-python" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#326CE5;strokeWidth=2;dashed=1;verticalAlign=top;fontSize=11;opacity=70;" vertex="1" parent="1">
+          <mxGeometry x="890" y="590" width="260" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="ctr2" value="&lt;b&gt;Container&lt;/b&gt;&lt;br&gt;egondimjr/meu_app_python:1.0&lt;br&gt;Flask escutando na porta 5000" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;dashed=1;fontSize=11;opacity=70;" vertex="1" parent="1">
+          <mxGeometry x="915" y="680" width="210" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="nota_pods" value="Pods são &lt;b&gt;efêmeros&lt;/b&gt;: se um Pod falhar, o ReplicaSet cria outro (&lt;i&gt;self-healing&lt;/i&gt;) e o IP muda — por isso o acesso é feito pelo &lt;b&gt;Service&lt;/b&gt;, que encontra os Pods pela label.&lt;br&gt;Contêineres do mesmo Pod compartilham IP, portas e volumes." style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=11;fillColor=#FFFFFF;strokeColor=#CCCCCC;rounded=1;spacingLeft=6;" vertex="1" parent="1">
+          <mxGeometry x="590" y="815" width="560" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Service -->
+        <mxCell id="service" value="&lt;b&gt;Service: meu-app-python-service&lt;/b&gt;&lt;br&gt;tipo: NodePort&lt;br&gt;ClusterIP :80 → targetPort 5000&lt;br&gt;selector: app=meu-app-python&lt;br&gt;balanceia entre os Pods" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#326CE5;strokeColor=#1A4AA8;fontColor=#FFFFFF;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="620" width="300" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="nodeport" value="&lt;b&gt;NodePort :30080&lt;/b&gt;&lt;br&gt;aberto no IP do nó (&lt;i&gt;minikube ip&lt;/i&gt;)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#326CE5;strokeWidth=2;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="800" width="300" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ===================== ATORES EXTERNOS ===================== -->
+        <mxCell id="dev" value="&lt;b&gt;Desenvolvedor / DevOps&lt;/b&gt;&lt;br&gt;&lt;b&gt;kubectl&lt;/b&gt; (CLI)&lt;br&gt;minikube" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="175" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="yamls" value="&lt;b&gt;Manifestos YAML&lt;/b&gt;&lt;br&gt;pod.yml&lt;br&gt;service.yml" style="shape=note;whiteSpace=wrap;html=1;size=14;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="55" y="295" width="130" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="dockerhub" value="&lt;b&gt;Docker Hub&lt;/b&gt; (Registry)&lt;br&gt;egondimjr/&lt;br&gt;meu_app_python:1.0" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=2;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="40" y="670" width="160" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="browser" value="&lt;b&gt;Usuário (navegador)&lt;/b&gt;&lt;br&gt;http://&amp;lt;minikube-ip&amp;gt;:30080&lt;br&gt;ou &lt;i&gt;minikube service&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=2;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1610" y="785" width="180" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- ===================== CONEXÕES ===================== -->
+        <mxCell id="e_yaml_dev" value="" style="html=1;endArrow=none;dashed=1;strokeColor=#d6b656;" edge="1" parent="1" source="yamls" target="dev">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" value="① kubectl apply -f" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#1A4AA8;fontSize=11;fontStyle=1;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="dev" target="apiserver">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" value="②" style="html=1;startArrow=block;startFill=1;endArrow=block;endFill=1;strokeColor=#1A4AA8;fontSize=12;fontStyle=1;labelBackgroundColor=#dae8fc;exitX=0.1;exitY=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="apiserver" target="etcd">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" value="③" style="html=1;endArrow=block;endFill=1;strokeColor=#1A4AA8;fontSize=12;fontStyle=1;labelBackgroundColor=#dae8fc;exitX=0.5;exitY=0;entryX=0.3;entryY=1;" edge="1" parent="1" source="scheduler" target="apiserver">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" value="④" style="html=1;endArrow=block;endFill=1;strokeColor=#1A4AA8;fontSize=12;fontStyle=1;labelBackgroundColor=#dae8fc;exitX=0.5;exitY=0;entryX=0.7;entryY=1;" edge="1" parent="1" source="controller" target="apiserver">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_cloud" value="" style="html=1;endArrow=block;endFill=1;dashed=1;strokeColor=#1A4AA8;exitX=0.5;exitY=0;entryX=0.9;entryY=1;" edge="1" parent="1" source="cloud" target="apiserver">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_api_obj" value="gerencia&lt;br&gt;objetos" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;dashed=1;strokeColor=#B38F00;fontSize=10;labelBackgroundColor=#F7F9FF;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="apiserver" target="obj_deploy">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" value="⑤ spec do Pod / status" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;startArrow=block;startFill=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#1A4AA8;fontSize=11;fontStyle=1;labelBackgroundColor=#F7F9FF;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="apiserver" target="kubelet">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="555" y="482" />
+              <mxPoint x="395" y="482" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_kubelet_runtime" value="CRI" style="html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#2D7600;fontSize=11;fontStyle=1;labelBackgroundColor=#d5e8d4;" edge="1" parent="1" source="kubelet" target="runtime">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" value="⑥ pull da imagem" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#9673a6;fontSize=11;fontStyle=1;labelBackgroundColor=#FFFFFF;exitX=0;exitY=0.5;entryX=1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="runtime" target="dockerhub">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_kubelet_pod" value="cria / monitora" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#2D7600;fontSize=10;labelBackgroundColor=#d5e8d4;exitX=1;exitY=0.5;entryX=0;entryY=0.25;" edge="1" parent="1" source="kubelet" target="pod1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_runtime_ctr" value="executa" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#9673a6;fontSize=10;labelBackgroundColor=#d5e8d4;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="runtime" target="ctr1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" value="⑦ programa regras do Service" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;dashed=1;strokeWidth=2;strokeColor=#2D7600;fontSize=11;fontStyle=1;labelBackgroundColor=#d5e8d4;exitX=0.5;exitY=1;entryX=0.5;entryY=1;" edge="1" parent="1" source="kubeproxy" target="nodeport">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="395" y="947" />
+              <mxPoint x="1370" y="947" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_np_svc" value="" style="html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#1A4AA8;" edge="1" parent="1" source="nodeport" target="service">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_svc_pod2" value=":5000" style="html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#1A4AA8;fontSize=11;fontStyle=1;labelBackgroundColor=#d5e8d4;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" edge="1" parent="1" source="service" target="pod2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_svc_pod1" value="selector app=meu-app-python → :5000" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#1A4AA8;fontSize=11;fontStyle=1;labelBackgroundColor=#d5e8d4;exitX=0.5;exitY=0;entryX=0.5;entryY=0;" edge="1" parent="1" source="service" target="pod1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1370" y="572" />
+              <mxPoint x="720" y="572" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e8" value="⑧ HTTP" style="html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#2D7600;fontSize=11;fontStyle=1;labelBackgroundColor=#FFFFFF;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" edge="1" parent="1" source="browser" target="nodeport">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ===================== FLUXO ===================== -->
+        <mxCell id="fluxo" value="&lt;b style=&quot;font-size:14px&quot;&gt;Fluxo de funcionamento&lt;/b&gt;&lt;br&gt;&lt;b&gt;①&lt;/b&gt; O desenvolvedor executa &lt;i&gt;kubectl apply -f pod.yml / service.yml&lt;/i&gt;; o kubectl envia o manifesto ao &lt;b&gt;kube-apiserver&lt;/b&gt;.   &lt;b&gt;②&lt;/b&gt; O apiserver valida o objeto e grava o estado desejado no &lt;b&gt;etcd&lt;/b&gt;.   &lt;b&gt;③&lt;/b&gt; O &lt;b&gt;kube-scheduler&lt;/b&gt; detecta o Pod sem nó e escolhe o Node mais adequado (CPU, memória, afinidade).&lt;br&gt;&lt;b&gt;④&lt;/b&gt; O &lt;b&gt;kube-controller-manager&lt;/b&gt; reconcilia continuamente estado atual × desejado (réplicas, Endpoints do Service).   &lt;b&gt;⑤&lt;/b&gt; O &lt;b&gt;kubelet&lt;/b&gt; do nó recebe a especificação do Pod e aciona o runtime via CRI, reportando o status de volta.&lt;br&gt;&lt;b&gt;⑥&lt;/b&gt; O &lt;b&gt;Container Runtime&lt;/b&gt; baixa a imagem &lt;i&gt;egondimjr/meu_app_python:1.0&lt;/i&gt; do Docker Hub e inicia o contêiner dentro do Pod.   &lt;b&gt;⑦&lt;/b&gt; O &lt;b&gt;kube-proxy&lt;/b&gt; cria as regras de rede do Service (ClusterIP :80 e NodePort :30080).&lt;br&gt;&lt;b&gt;⑧&lt;/b&gt; O usuário acessa &lt;i&gt;http://&amp;lt;minikube-ip&amp;gt;:30080&lt;/i&gt; → NodePort → &lt;b&gt;Service&lt;/b&gt; → Pod (label &lt;i&gt;app=meu-app-python&lt;/i&gt;) → contêiner Flask na porta 5000." style="rounded=1;arcSize=4;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacing=10;fillColor=#FFFFFF;strokeColor=#326CE5;strokeWidth=2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1005" width="1750" height="115" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

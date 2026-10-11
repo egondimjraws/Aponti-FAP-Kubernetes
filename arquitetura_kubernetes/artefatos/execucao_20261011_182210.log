@@ -1,0 +1,131 @@
+$ minikube start
+* minikube v1.39.0 on Ubuntu 26.04
+* Using the virtualbox driver based on existing profile
+* Starting "minikube" primary control-plane node in "minikube" cluster
+* Preparing Kubernetes v1.37.0 on containerd 2.3.4 ...
+* Configuring bridge CNI (Container Networking Interface) ...
+* Verifying Kubernetes components...
+  - Using image gcr.io/k8s-minikube/storage-provisioner:v5
+* Enabled addons: storage-provisioner, default-storageclass
+* Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
+
+$ minikube status
+minikube
+type: Control Plane
+host: Running
+kubelet: Running
+apiserver: Running
+kubeconfig: Configured
+
+
+$ kubectl get nodes -o wide
+NAME       STATUS   ROLES           AGE   VERSION   INTERNAL-IP      EXTERNAL-IP   OS-IMAGE               KERNEL-VERSION    CONTAINER-RUNTIME
+minikube   Ready    control-plane   45s   v1.37.0   192.168.59.100   <none>        Buildroot 2025.02.16   6.6.152 (amd64)   containerd://2.3.4
+
+$ kubectl apply -f pod.yml
+pod/meu-app-python created
+
+$ kubectl apply -f service.yml
+service/meu-app-python-service created
+
+$ kubectl wait --for=condition=Ready pod/meu-app-python --timeout=180s
+pod/meu-app-python condition met
+
+$ kubectl get pods -o wide --show-labels
+NAME             READY   STATUS    RESTARTS   AGE   IP           NODE       NOMINATED NODE   READINESS GATES   LABELS
+meu-app-python   1/1     Running   0          8s    10.244.0.3   minikube   <none>           <none>            app=meu-app-python
+
+$ kubectl get svc meu-app-python-service -o wide
+NAME                     TYPE       CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE   SELECTOR
+meu-app-python-service   NodePort   10.100.141.160   <none>        80:30080/TCP   8s    app=meu-app-python
+
+$ kubectl describe pod meu-app-python
+Name:             meu-app-python
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             minikube/192.168.59.100
+Start Time:       Sun, 11 Oct 2026 18:22:41 -0300
+Labels:           app=meu-app-python
+Annotations:      <none>
+Status:           Running
+IP:               10.244.0.3
+IPs:
+  IP:  10.244.0.3
+Containers:
+  meu-app-python:
+    Container ID:   containerd://2d0edc7411c70c137cb784b02946f02101abe84f59708e944e10c149c8b0dd2b
+    Image:          egondimjr/meu_app_python:1.0
+    Image ID:       docker.io/egondimjr/meu_app_python@sha256:e5391b14f132930ad9882ccf4e9078b14181926ccce45af30a9297e3ce30183e
+    Port:           5000/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Sun, 11 Oct 2026 18:22:49 -0300
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      cpu:     250m
+      memory:  128Mi
+    Requests:
+      cpu:        100m
+      memory:     64Mi
+    Environment:  <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-jznj8 (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-jznj8:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  7s    default-scheduler  Successfully assigned default/meu-app-python to minikube
+  Normal  Pulling    6s    kubelet            spec.containers{meu-app-python}: Pulling image "egondimjr/meu_app_python:1.0"
+  Normal  Pulled     0s    kubelet            spec.containers{meu-app-python}: Successfully pulled image "egondimjr/meu_app_python:1.0" in 7.073s (7.073s including waiting). Image size: 51314561 bytes.
+  Normal  Created    0s    kubelet            spec.containers{meu-app-python}: Container created
+  Normal  Started    0s    kubelet            spec.containers{meu-app-python}: Container started
+
+$ kubectl describe svc meu-app-python-service
+Name:                     meu-app-python-service
+Namespace:                default
+Labels:                   <none>
+Annotations:              <none>
+Selector:                 app=meu-app-python
+Type:                     NodePort
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       10.100.141.160
+IPs:                      10.100.141.160
+Port:                     <unset>  80/TCP
+TargetPort:               5000/TCP
+NodePort:                 <unset>  30080/TCP
+Endpoints:                10.244.0.3:5000
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Internal Traffic Policy:  Cluster
+Events:                   <none>
+
+$ kubectl get endpoints meu-app-python-service
+Warning: v1 Endpoints is deprecated in v1.33+; use discovery.k8s.io/v1 EndpointSlice
+NAME                     ENDPOINTS         AGE
+meu-app-python-service   10.244.0.3:5000   8s
+
+$ kubectl logs meu-app-python
+
+URL do Service: http://192.168.59.100:30080
+$ curl -s http://192.168.59.100:30080
+Atividade Docker + Vagrant concluída!

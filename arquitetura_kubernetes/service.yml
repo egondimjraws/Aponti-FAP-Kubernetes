@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: meu-app-python-service
+spec:
+  type: NodePort              # expõe o Service em uma porta fixa de cada nó (faixa 30000-32767)
+  selector:
+    app: meu-app-python       # encaminha o tráfego para os Pods com esta label
+  ports:
+    - protocol: TCP
+      port: 80                # porta do Service dentro do cluster (ClusterIP)
+      targetPort: 5000        # porta do container no Pod
+      nodePort: 30080         # porta acessível de fora: http://<IP-do-minikube>:30080
