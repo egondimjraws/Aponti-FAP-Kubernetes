@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: meu-app-python-deployment
+  labels:
+    app: meu-app-python
+spec:
+  replicas: 3                     # o ReplicaSet criado pelo Deployment mantém sempre 3 Pods
+  selector:
+    matchLabels:
+      app: meu-app-python         # Pods que este Deployment gerencia
+  strategy:
+    type: RollingUpdate           # troca os Pods aos poucos em uma atualização de imagem
+  template:                       # modelo usado para criar cada Pod
+    metadata:
+      labels:
+        app: meu-app-python       # mesma label do selector do service.yml
+    spec:
+      containers:
+        - name: meu-app-python
+          image: egondimjr/meu_app_python:1.0
+          ports:
+            - containerPort: 5000
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+            limits:
+              cpu: "250m"
+              memory: "128Mi"
